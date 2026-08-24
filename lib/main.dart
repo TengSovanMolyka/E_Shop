@@ -1,3 +1,4 @@
+import 'package:e_shop/AuthPage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
@@ -24,13 +25,15 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
 
+      title: 'E_Shop',
+
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.red,
         scaffoldBackgroundColor: Colors.grey.shade100,
       ),
 
-      home: const LayoutPage(),
+      home: const AuthPage(),
     );
   }
 }
