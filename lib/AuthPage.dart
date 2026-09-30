@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
-import '/screens/LoginPage.dart';
-import '/screens/SignUpPage.dart';
-import '/LayoutPage.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 
   void _openLogin(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+    context.push('/login');
   }
 
   void _openSignUp(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SignUpPage()),
-    );
+    context.push('/signup');
   }
 
   void _continueAsGuest(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LayoutPage()),
-    );
+    context.go('/home');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFE9E9),
+      backgroundColor: const Color(0xFFFFE5E5),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

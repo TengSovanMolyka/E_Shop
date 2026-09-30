@@ -1,81 +1,77 @@
 import 'package:flutter/material.dart';
-import 'screens/HomePage.dart';
-import 'screens/ProductPage.dart';
-import 'screens/CartPage.dart';
-import 'screens/FavoritePage.dart';
-import 'screens/ProfilePage.dart';
+import 'package:go_router/go_router.dart';
 
-class LayoutPage extends StatefulWidget {
-  const LayoutPage({super.key});
+class LayoutPage extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
 
-  @override
-  State<LayoutPage> createState() => _LayoutPageState();
-}
+  const LayoutPage({
+    super.key,
+    required this.navigationShell,
+  });
 
-class _LayoutPageState extends State<LayoutPage> {
-  int currentIndex = 0;
-
-  final List<Widget> pages = const [
-    HomePage(),
-    ProductPage(),
-    CartPage(),
-    FavoritePage(),
-    ProfilePage(),
-  ];
+  void _onItemTapped(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[400],
-      body: pages[currentIndex],
+      backgroundColor: const Color(0xFFFFE9E9),
 
-      // ================= BOTTOM NAVIGATION =================
+      // Current page from go_router
+      body: navigationShell,
 
+      // Bottom navigation
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
+        currentIndex: navigationShell.currentIndex,
+        onTap: _onItemTapped,
 
         type: BottomNavigationBarType.fixed,
 
+        backgroundColor: Colors.white,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey,
 
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
+
+        showSelectedLabels: true,
         showUnselectedLabels: true,
 
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        elevation: 10,
 
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
-            label: "Home",
+            label: 'Home',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view),
-            label: "Products",
+            label: 'Products',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_outlined),
             activeIcon: Icon(Icons.shopping_cart),
-            label: "Cart",
+            label: 'Cart',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
             activeIcon: Icon(Icons.favorite),
-            label: "Favorites",
+            label: 'Favorites',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             activeIcon: Icon(Icons.person),
-            label: "Profile",
+            label: 'Profile',
           ),
         ],
       ),

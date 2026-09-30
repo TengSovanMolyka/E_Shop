@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '/models/product.dart';
 import '/models/app_state.dart';
 
@@ -16,6 +17,7 @@ class ProductDetailPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFE9E9),
+
       appBar: AppBar(
         title: Text(
           product.name,
@@ -27,6 +29,7 @@ class ProductDetailPage extends StatelessWidget {
         backgroundColor: Colors.red,
         centerTitle: true,
         foregroundColor: Colors.white,
+
         actions: [
           AnimatedBuilder(
             animation: appState,
@@ -36,6 +39,7 @@ class ProductDetailPage extends StatelessWidget {
               return IconButton(
                 onPressed: () {
                   final wasFavorite = appState.isFavorite(product);
+
                   appState.toggleFavorite(product);
 
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -50,29 +54,54 @@ class ProductDetailPage extends StatelessWidget {
                   );
                 },
                 icon: Icon(
-                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  isFavorite
+                      ? Icons.favorite
+                      : Icons.favorite_border,
                   color: Colors.white,
                   size: 28,
                 ),
               );
             },
           ),
+
           const SizedBox(width: 5),
         ],
       ),
-      body: Padding(
+
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
+            // ================= PRODUCT IMAGE =================
+
             Center(
               child: Image.asset(
                 product.image,
                 height: 250,
                 fit: BoxFit.contain,
+
+                errorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(
+                    height: 250,
+                    child: Center(
+                      child: Icon(
+                        Icons.image_not_supported,
+                        size: 80,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
+
             const SizedBox(height: 20),
+
+            // ================= PRODUCT NAME =================
+
             Text(
               product.name,
               style: const TextStyle(
@@ -80,6 +109,11 @@ class ProductDetailPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
+            const SizedBox(height: 5),
+
+            // ================= CATEGORY =================
+
             Text(
               product.category,
               style: TextStyle(
@@ -87,7 +121,11 @@ class ProductDetailPage extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+
             const SizedBox(height: 15),
+
+            // ================= PRICE =================
+
             Text(
               "\$${product.price.toStringAsFixed(2)}",
               style: const TextStyle(
@@ -96,7 +134,11 @@ class ProductDetailPage extends StatelessWidget {
                 fontSize: 22,
               ),
             ),
+
             const SizedBox(height: 20),
+
+            // ================= DESCRIPTION =================
+
             const Text(
               "Description",
               style: TextStyle(
@@ -104,7 +146,9 @@ class ProductDetailPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             const SizedBox(height: 8),
+
             Text(
               product.description,
               style: TextStyle(
@@ -113,21 +157,33 @@ class ProductDetailPage extends StatelessWidget {
                 height: 1.5,
               ),
             ),
-            const SizedBox(height: 20),
+
+            const SizedBox(height: 30),
+
+            // ================= ADD TO CART =================
+
             SizedBox(
               width: double.infinity,
               height: 52,
+
               child: ElevatedButton.icon(
                 onPressed: () {
                   appState.addToCart(product);
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("${product.name} added to cart"),
+                      content: Text(
+                        "${product.name} added to cart",
+                      ),
                       duration: const Duration(seconds: 1),
                     ),
                   );
                 },
-                icon: const Icon(Icons.shopping_cart_outlined),
+
+                icon: const Icon(
+                  Icons.shopping_cart_outlined,
+                ),
+
                 label: const Text(
                   "Add to Cart",
                   style: TextStyle(
@@ -135,9 +191,11 @@ class ProductDetailPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
+
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

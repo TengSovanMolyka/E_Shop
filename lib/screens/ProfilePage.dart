@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final user = appState.currentUser;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFE9E9),
+      backgroundColor: const Color(0xFFFFE5E5),
       appBar: AppBar(
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,

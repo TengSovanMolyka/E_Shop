@@ -1,10 +1,12 @@
-import 'package:e_shop/AuthPage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'LayoutPage.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+
+import 'routes/app_routes.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
 
       useInheritedMediaQuery: true,
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade100,
       ),
 
-      home: const AuthPage(),
+      routerConfig: appRouter,
     );
   }
 }

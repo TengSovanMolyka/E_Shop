@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import '../models/product.dart';
-import '../pages/ProductDetailPage.dart';
 import '../models/app_state.dart';
 
 class ProductCard extends StatelessWidget {
@@ -23,38 +24,57 @@ class ProductCard extends StatelessWidget {
         return Container(
           width: 170,
           margin: const EdgeInsets.only(right: 15),
+
           child: Card(
             elevation: 5,
             shadowColor: Colors.black12,
             color: Colors.white,
+
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
+
             clipBehavior: Clip.antiAlias,
+
             child: InkWell(
               borderRadius: BorderRadius.circular(16),
+
+              // =================================================
+              // PRODUCT DETAIL
+              // =================================================
+
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ProductDetailPage(product: product),
-                  ),
+                context.push(
+                  '/product/${product.id}',
+                  extra: product,
                 );
               },
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
+
+                  // =================================================
+                  // PRODUCT IMAGE + FAVORITE
+                  // =================================================
+
                   Expanded(
                     flex: 6,
+
                     child: Stack(
                       children: [
+
+                        // ================= IMAGE =================
+
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(15),
+
                             child: Image.asset(
                               product.image,
                               fit: BoxFit.contain,
+
                               errorBuilder:
                                   (context, error, stackTrace) {
                                 return const Icon(
@@ -72,12 +92,18 @@ class ProductCard extends StatelessWidget {
                         Positioned(
                           top: 10,
                           right: 10,
+
                           child: InkWell(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius:
+                            BorderRadius.circular(30),
+
                             onTap: () {
+                              final wasFavorite =
+                              appState.isFavorite(product);
+
                               appState.toggleFavorite(product);
 
-                              final message = isFavorite
+                              final message = wasFavorite
                                   ? "${product.name} removed from favorites"
                                   : "${product.name} added to favorites";
 
@@ -90,13 +116,16 @@ class ProductCard extends StatelessWidget {
                                 ),
                               );
                             },
+
                             child: CircleAvatar(
                               radius: 16,
                               backgroundColor: Colors.white,
+
                               child: Icon(
                                 isFavorite
                                     ? Icons.favorite
                                     : Icons.favorite_border,
+
                                 color: Colors.red,
                                 size: 20,
                               ),
@@ -109,6 +138,10 @@ class ProductCard extends StatelessWidget {
 
                   const Divider(height: 1),
 
+                  // =================================================
+                  // PRODUCT INFORMATION
+                  // =================================================
+
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       10,
@@ -116,13 +149,21 @@ class ProductCard extends StatelessWidget {
                       10,
                       8,
                     ),
+
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+
                       children: [
+
+                        // ================= NAME =================
+
                         Text(
                           product.name,
+
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
+
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -131,8 +172,14 @@ class ProductCard extends StatelessWidget {
 
                         const SizedBox(height: 3),
 
+                        // ================= CATEGORY =================
+
                         Text(
                           product.category,
+
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey.shade600,
@@ -141,12 +188,21 @@ class ProductCard extends StatelessWidget {
 
                         const SizedBox(height: 10),
 
+                        // =================================================
+                        // PRICE + CART
+                        // =================================================
+
                         Row(
                           mainAxisAlignment:
                           MainAxisAlignment.spaceBetween,
+
                           children: [
+
+                            // ================= PRICE =================
+
                             Text(
                               "\$${product.price.toStringAsFixed(2)}",
+
                               style: const TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
@@ -159,18 +215,23 @@ class ProductCard extends StatelessWidget {
                             Container(
                               width: 38,
                               height: 38,
+
                               decoration: BoxDecoration(
                                 color: Colors.red,
+
                                 borderRadius:
                                 BorderRadius.circular(8),
                               ),
+
                               child: IconButton(
                                 padding: EdgeInsets.zero,
+
                                 icon: const Icon(
                                   Icons.shopping_cart_outlined,
                                   color: Colors.white,
                                   size: 20,
                                 ),
+
                                 onPressed: () {
                                   appState.addToCart(product);
 

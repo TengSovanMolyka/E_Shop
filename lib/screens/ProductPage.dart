@@ -14,20 +14,14 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFE9E9),
+      backgroundColor: const Color(0xFFFFE5E5),
       appBar: AppBar(
         title: const Text(
           "Products",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        leading: const Icon(Icons.menu, color: Colors.white),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(Icons.notifications_none, color: Colors.white),
-          ),
-        ],
         backgroundColor: Colors.red,
+        foregroundColor: Colors.white,
         centerTitle: true,
       ),
       body: Padding(
